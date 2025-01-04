@@ -7,13 +7,21 @@ output: html_notebook
 
 The Aim of this project is to determine whether, in treatment of depression in Males and Females aged 18-40, a VR-based method of treatment is more effective than a traditional CBT method of treatment.
 
-To assess depression severity, the author of the Dataset has used self reporting to gather severity of depression in 200 patients. The patients were male(95) and female(105) and fell between the ages of 18 to 40 years old. The patients were randomly assigned to participate in the traditional CBT method (Control group) or the VR-Based method (experimental.)
+To assess depression severity, the author of the Dataset has used self reporting to gather severity of depression in 200 patients. The patients were psychotherapy patients, male(95) and female(105) and fell between the ages of 18 to 40 years old. The patients were randomly assigned to participate in the traditional CBT method (Control group) or the VR-Based method (experimental.) The patients then used the Zung Self-Rating Depression Scale
 
 **Introduction**
 
+The immersive nature of VR could be useful in the non-pharmacutical treatment of depression in men and women. In this study we will compare the results from the data gathered to determine whether the data itself is useful, and whether it is true that an experimental VR treatment for depression is as effective or perhaps more effective than a traditional Cognitive Behavioural method of treatment.
+
+If the data shows that participants who suffer with symptoms of depression experience more relief through VR based therapy, then it could be said that this is an effective method of treatment for these symptoms.
+
 **Hypothesis**:
 
-In treatment of depression in men and women aged 10-40, a VR based method of treatment is more effective than traditional method.
+In men and women aged 10-40 who suffer with symptoms of depression, a VR based method of treatment is more effective than traditional method in relieving these symptoms of depression.
+
+**Method**
+
+To determine whether there is a significant change in score between the two groups, also between men and women.
 
 ```{r Libraries}
 # Load Packages
@@ -137,3 +145,5 @@ ggplot(depression_data, aes(x = Pre_Treatment_Score, y = Post_Treatment_Score, c
   scale_color_manual(values = c("dodgerblue1", "orange"))
 
 ```
+
+**Results**
