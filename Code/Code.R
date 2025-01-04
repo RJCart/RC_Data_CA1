@@ -1,12 +1,20 @@
 #Hypothesis: For males and females between the ages of 18 and 40, VR based therapy is more effective than traditional therapy in alleviating symptoms of depression.
 
-install.packages("ggplot2")
-class(data)
+
+##Packages used
+#install.packages("ggplot2")
+#install.packages("devtools")
+#install.packages("dplyr")
+#devtools::install_github("r-lib/conflicted")
 
 
 # Load Packages
 library(ggplot2)
 library(tidyverse)
+library(conflicted)
+library(dplyr)
+#Preference dplyr for conflicts
+conflicts_prefer(dplyr::filter)
 
 
 #Access Data
@@ -14,9 +22,6 @@ depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/pa
 
 
 
-head(depression_data)          # View first few rows
-dim(depression_data)           # Check dimensions (rows and columns)
-names(depression_data)         # Check column names
 
 #Pre Treatment Histogram
 ggplot(depression_data, aes(x = Pre_Treatment_Score)) +
@@ -30,7 +35,7 @@ ggplot(depression_data, aes(x = Post_Treatment_Score)) +
   labs(title = "Distribution of Post-Treatment Scores", x = "Post-Treatment Score", y = "Frequency") +
   theme_minimal()
 
-# Basic boxplot
+# Boxplot of change in score by group
 ggplot(depression_data, aes(x = Group, y = Change_in_Score, fill = Group)) +
   geom_boxplot() +
   labs(
