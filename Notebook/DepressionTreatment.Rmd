@@ -1,6 +1,8 @@
 ---
 title: "Comparison of VR Based and Traditional Treatments of Depression on Males and Females Aged 18-80"
 output: html_notebook
+
+Hypothesis: 
 ---
 
 ```{r Libraries}
@@ -19,23 +21,47 @@ conflicts_prefer(dplyr::filter)
 depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
 ```
 
-```{r}
+```{r Summary_Data}
+
+
+# Calculate summary statistics
+summary_data <- depression_data %>%
+  pivot_longer(
+    cols = c(Pre_Treatment_Score, Post_Treatment_Score),
+    names_to = "Treatment_Phase",    # New column: "Pre_Treatment" or "Post_Treatment"
+    values_to = "Score"              # Column for scores
+  ) %>%
+  group_by(Group, Treatment_Phase) %>%
+  summarise(
+    Mean_Score = mean(Score, na.rm = TRUE),
+    SE = sd(Score, na.rm = TRUE) / sqrt(n()),        # SE Standard Error
+    Lower_CI = Mean_Score - qt(0.975, df = n() - 1) * SE,  # Lower 95% CI
+    Upper_CI = Mean_Score + qt(0.975, df = n() - 1) * SE,   # Upper 95% CI
+    .groups = "drop"
+  )
+
+```
+
+```{r Mean_Depression_Scores_Pre_VS_Post_Treatment}
 #Pre Treatment Histogram
-ggplot(depression_data, aes(x = Pre_Treatment_Score)) +
-  geom_histogram(binwidth = 5, fill = "blue", color = "white") +
-  labs(title = "Distribution of Pre-Treatment Scores", x = "Pre-Treatment Score", y = "Frequency") +
-  theme_minimal()
-```
+ggplot(summary_data, aes(x = Treatment_Phase, y = Mean_Score, color = Group, group = Group)) +
+  geom_point(size = 4, position = position_dodge(0.2)) +  # Add points for means
+  geom_errorbar(
+    aes(ymin = Lower_CI, ymax = Upper_CI),
+    width = 0.2, size = 1, position = position_dodge(0.2)
+  ) +
+  geom_line(position = position_dodge(0.2)) +  # Connect points with lines
+  labs(
+    title = "95% Confidence Intervals for Depression Scores",
+    x = "Treatment Phase",
+    y = "Mean Depression Score",
+    color = "Treatment Group"
+  ) +
+  theme_minimal() +
+  scale_color_manual(values = c("blue", "orange")) +
+  scale_x_discrete(labels = c("Pre_Treatment_Score" = "Pre-Treatment", "Post_Treatment_Score" = "Post-Treatment"))
 
-```{r}
-#Post Treatment Histogram
-ggplot(depression_data, aes(x = Post_Treatment_Score)) +
-  geom_histogram(binwidth = 5, fill = "red", color = "white") +
-  labs(title = "Distribution of Post-Treatment Scores", x = "Post-Treatment Score", y = "Frequency") +
-  theme_minimal()
 ```
-
-ff
 
 ```{r Comparing_Pre_And_Post_Treatment_Scores_By_Gender_And_Treatment_Type}
 library(tidyverse)
@@ -87,4 +113,18 @@ ggsave("change_in_score_by_gender_and_group.png", width = 10, height = 6)
 
 ```
 
-f
+```{r Relationship_Between_Initial_Scores_And_Change_After_Treatment}
+ggplot(depression_data, aes(x = Pre_Treatment_Score, y = Post_Treatment_Score, color = Group)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, size = 1) +
+  labs(
+    title = "Relationship Between Initial Scores and Change After Treatment",
+    x = "Initial Depression Score",
+    y = "Post Treatment Score",
+    color = "Treatment Group"
+  ) +
+  theme_minimal() +
+  facet_wrap(~ Group) +
+  scale_color_manual(values = c("dodgerblue1", "orange"))
+
+```
