@@ -82,20 +82,29 @@ severity_table <- depression_data %>%
   arrange(desc(n))
 severity_table <- severity_table %>%
   mutate(Percentage = n / sum(n) * 100)
-print(severity_table)
 
-ggplot(severity_table, aes(x = Severity, y = n, fill = Severity)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
+#Group By Treatment
+severity_by_treatment <- depression_data %>%
+  group_by(Group, Severity) %>%
+  summarise(Frequency = n(), .groups = "drop") %>%
+  mutate(Percentage = Frequency / sum(Frequency) * 100)
+print(severity_by_treatment)
+
+#Plot Data
+ggplot(severity_by_treatment, aes(x = Severity, y = Frequency, fill = Group)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(
+    values = c("Control (CBT)" = "dodgerblue1", "Experimental (VR)" ="orange")) +
   labs(
-    title = "Pre-Treatment Frequency of Depression Severity",
+    title = "Pre-Treatment Depression Severity",
     x = "Severity Level",
-    y = "Frequency"
+    y = "Frequency",
+    fill = "Treatment Type"
   ) +
   theme_minimal()
 ```
 
 ```{r Post_Treatment_Severity}
-
 
 depression_data <- depression_data %>%
   mutate(Severity = case_when(
@@ -111,16 +120,28 @@ severity_table <- depression_data %>%
   arrange(desc(n))
 severity_table <- severity_table %>%
   mutate(Percentage = n / sum(n) * 100)
-print(severity_table)
 
-ggplot(severity_table, aes(x = Severity, y = n, fill = Severity)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
+#Group By Treatment
+severity_by_treatment <- depression_data %>%
+  group_by(Group, Severity) %>%
+  summarise(Frequency = n(), .groups = "drop") %>%
+  mutate(Percentage = Frequency / sum(Frequency) * 100)
+print(severity_by_treatment)
+
+#Plot Data
+ggplot(severity_by_treatment, aes(x = Severity, y = Frequency, fill = Group)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(
+    values = c("Control (CBT)" = "dodgerblue1", "Experimental (VR)" ="orange")) +
   labs(
-    title = "Post-Treatment Frequency of Depression Severity",
+    title = "Post-Treatment Depression Severity",
     x = "Severity Level",
-    y = "Frequency"
+    y = "Frequency",
+    fill = "Treatment Type"
   ) +
   theme_minimal()
+
+
 ```
 
 ```{r Comparing_Pre_And_Post_Treatment_Scores_By_Gender_And_Treatment_Type}
