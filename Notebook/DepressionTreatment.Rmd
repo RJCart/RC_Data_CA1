@@ -2,7 +2,7 @@
 title: "Comparison of VR Based and Traditional Treatments of Depression on Males and Females Aged 18-80"
 output: html_notebook
 
-Hypothesis: 
+Hypothesis: In treatment of depression in men and women aged 10-40, a VR based method of treatment is more effective than traditional method.
 ---
 
 ```{r Libraries}
