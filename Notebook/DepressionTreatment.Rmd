@@ -58,13 +58,13 @@ ggplot(summary_data, aes(x = Treatment_Phase, y = Mean_Score, color = Group, gro
     color = "Treatment Group"
   ) +
   theme_minimal() +
-  scale_color_manual(values = c("blue", "orange")) +
+  scale_color_manual(values = c("dodgerblue1", "orange")) +
   scale_x_discrete(labels = c("Pre_Treatment_Score" = "Pre-Treatment", "Post_Treatment_Score" = "Post-Treatment"))
 
 ```
 
 ```{r Comparing_Pre_And_Post_Treatment_Scores_By_Gender_And_Treatment_Type}
-library(tidyverse)
+
 
 # Change to Long Format
 long_data <- depression_data %>%
@@ -105,9 +105,8 @@ ggplot(depression_data, aes(x = interaction(Gender, Group), y = Change_in_Score,
   ) +
   theme_minimal() +
   scale_x_discrete(labels = c("Male.Control" = "Male (Control)", "Male.Experimental" = "Male (Experimental)",
-                              "Female.Control" = "Female (Control)", "Female.Experimental" = "Female (Experimental)"))
-
-ggsave("change_in_score_by_gender_and_group.png", width = 10, height = 6)
+                              "Female.Control" = "Female (Control)", "Female.Experimental" = "Female (Experimental)"))+
+  scale_fill_manual(values = c("dodgerblue1", "orange"))
 
 
 
