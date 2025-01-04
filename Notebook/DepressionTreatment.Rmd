@@ -14,7 +14,7 @@ library(hmisc)
 conflicts_prefer(dplyr::filter)
 ```
 
-```{r}
+```{r Import_Data_Set}
 #Define Dataset
 depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
 ```
@@ -35,7 +35,9 @@ ggplot(depression_data, aes(x = Post_Treatment_Score)) +
   theme_minimal()
 ```
 
-```{r Comparison of Pre and Post Treatment Scores by Gender and Treatment Type}
+ff
+
+```{r Comparing_Pre_And_Post_Treatment_Scores_By_Gender_And_Treatment_Type}
 library(tidyverse)
 
 # Change to Long Format
@@ -61,10 +63,9 @@ ggplot(long_data, aes(x = interaction(Gender, Score_Type), y = Score, fill = Gro
   scale_fill_manual(values = c("dodgerblue1", "orange"))
 
 
-
 ```
 
-```{r Average Change in Score by Gender and Treatment Group}
+```{r Average_Change_In_Score_By_Gender_And_Treatment_Group}
 
 
 ggplot(depression_data, aes(x = interaction(Gender, Group), y = Change_in_Score, fill = Group)) +
@@ -82,4 +83,8 @@ ggplot(depression_data, aes(x = interaction(Gender, Group), y = Change_in_Score,
 
 ggsave("change_in_score_by_gender_and_group.png", width = 10, height = 6)
 
+
+
 ```
+
+f
