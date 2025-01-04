@@ -1,0 +1,109 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+#Hypothesis: For males and females between the ages of 18 and 40, VR based therapy is more effective than traditional therapy in alleviating symptoms of depression.
+
+##Packages used #install.packages("ggplot2") #install.packages("devtools") #install.packages("dplyr") #devtools::install_github("r-lib/conflicted")
+
+```{r Libraries}
+# Load Packages
+library(ggplot2)
+library(tidyverse)
+library(conflicted)
+library(dplyr)
+#Preference dplyr for conflicts
+conflicts_prefer(dplyr::filter)
+```
+
+```{r}
+
+#Define Dataset
+depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
+```
+
+```{r}
+#Pre Treatment Histogram
+ggplot(depression_data, aes(x = Pre_Treatment_Score)) +
+  geom_histogram(binwidth = 5, fill = "blue", color = "white") +
+  labs(title = "Distribution of Pre-Treatment Scores", x = "Pre-Treatment Score", y = "Frequency") +
+  theme_minimal()
+```
+
+```{r}
+#Post Treatment Histogram
+ggplot(depression_data, aes(x = Post_Treatment_Score)) +
+  geom_histogram(binwidth = 5, fill = "red", color = "white") +
+  labs(title = "Distribution of Post-Treatment Scores", x = "Post-Treatment Score", y = "Frequency") +
+  theme_minimal()
+```
+
+```{r}
+
+# Boxplot of change in score by group
+ggplot(depression_data, aes(x = Group, y = Change_in_Score, fill = Group)) +
+  geom_boxplot() +
+  labs(
+    title = "Change in Score by Group",
+    x = "Group",
+    y = "Change in Score"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Pre treatment Comparison Histogram
+ggplot(depression_data, aes(x = Group, y = Pre_Treatment_Score, fill = Group)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("blue", "orange")) +
+  labs(
+    title = "Pre-Treatment Scores by Group",
+    x = "Group",
+    y = "Pre-Treatment Score"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+library(tidyverse)
+
+# Change to Long Format
+long_data <- depression_data %>%
+  pivot_longer(
+    cols = c(Pre_Treatment_Score, Post_Treatment_Score),
+    names_to = "Score_Type",    # New column indicating "Pre" or "Post"
+    values_to = "Score"         # Column for scores
+  )
+
+#BoxPlot
+ggplot(long_data, aes(x = interaction(Gender, Score_Type), y = Score, fill = Group)) +
+  geom_boxplot() +
+  labs(
+    title = "Pre and Post Treatment Scores by Gender and Group",
+    x = "Gender and Score Type",
+    y = "Score",
+    fill = "Group"
+  ) +
+  theme_minimal() +
+  scale_x_discrete(labels = c("Male.Pre" = "Male (Pre)", "Male.Post" = "Male (Post)",
+                              "Female.Pre" = "Female (Pre)", "Female.Post" = "Female (Post)"))+
+  scale_fill_manual(values = c("dodgerblue1", "orange"))
+
+
+
+```

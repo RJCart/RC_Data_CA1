@@ -17,7 +17,7 @@ library(dplyr)
 conflicts_prefer(dplyr::filter)
 
 
-#Access Data
+#Define Dataset
 depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
 
 
