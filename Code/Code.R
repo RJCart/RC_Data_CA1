@@ -3,16 +3,14 @@
 install.packages("ggplot2")
 class(data)
 
-depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
-
-
-# Test Plot
-ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point()
-
 
 # Load Packages
 library(ggplot2)
+library(tidyverse)
+
+
+#Access Data
+depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
 
 
 
@@ -26,6 +24,11 @@ ggplot(depression_data, aes(x = Pre_Treatment_Score)) +
   labs(title = "Distribution of Pre-Treatment Scores", x = "Pre-Treatment Score", y = "Frequency") +
   theme_minimal()
 
+#Post Treatment Histogram
+ggplot(depression_data, aes(x = Post_Treatment_Score)) +
+  geom_histogram(binwidth = 5, fill = "red", color = "white") +
+  labs(title = "Distribution of Post-Treatment Scores", x = "Post-Treatment Score", y = "Frequency") +
+  theme_minimal()
 
 # Basic boxplot
 ggplot(depression_data, aes(x = Group, y = Change_in_Score, fill = Group)) +
@@ -37,3 +40,13 @@ ggplot(depression_data, aes(x = Group, y = Change_in_Score, fill = Group)) +
   ) +
   theme_minimal()
 
+# Pre treatment Comparison Histogram
+ggplot(depression_data, aes(x = Group, y = Pre_Treatment_Score, fill = Group)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("blue", "orange")) +
+  labs(
+    title = "Pre-Treatment Scores by Group",
+    x = "Group",
+    y = "Pre-Treatment Score"
+  ) +
+  theme_minimal()
