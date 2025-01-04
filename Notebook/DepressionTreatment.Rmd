@@ -21,7 +21,13 @@ In men and women aged 10-40 who suffer with symptoms of depression, a VR based m
 
 **Method**
 
+There were 100 participants in the survey, all of whom were between the age of 18 and 40. There were 95 males and 105 female participants. The participants were divided to two equal groups, one of which used Cognitive Behavioural Therapy (The Control group) and the other which used VR based therapy (Experimental Group). The participants spent 50 minutes per week for the duration of 12 weeks with a therapist. The participants were asked to self report at the beginning and end of the study. The Zung Depression Scale was used. It is a 20-item sale which asks to report from 1 to 4 with 1 meaning a little of the time and 4 meaning most of the time. The scores ranged from 20 to80.
+
+In this document, we will use statistical analysis to determine whether a difference can be observed between the treatment methods in men and in women.
+
 To determine whether there is a significant change in score between the two groups, also between men and women.
+
+**Results**
 
 ```{r Libraries}
 # Load Packages
@@ -60,25 +66,61 @@ summary_data <- depression_data %>%
 
 ```
 
-```{r Mean_Depression_Scores_Pre_VS_Post_Treatment}
-#Pre Treatment Histogram
-ggplot(summary_data, aes(x = Treatment_Phase, y = Mean_Score, color = Group, group = Group)) +
-  geom_point(size = 4, position = position_dodge(0.2)) +  # Add points for means
-  geom_errorbar(
-    aes(ymin = Lower_CI, ymax = Upper_CI),
-    width = 0.2, size = 1, position = position_dodge(0.2)
-  ) +
-  geom_line(position = position_dodge(0.2)) +  # Connect points with lines
-  labs(
-    title = "95% Confidence Intervals for Depression Scores",
-    x = "Treatment Phase",
-    y = "Mean Depression Score",
-    color = "Treatment Group"
-  ) +
-  theme_minimal() +
-  scale_color_manual(values = c("dodgerblue1", "orange")) +
-  scale_x_discrete(labels = c("Pre_Treatment_Score" = "Pre-Treatment", "Post_Treatment_Score" = "Post-Treatment"))
+```{r Pre_Treatment_Severity}
 
+depression_data <- depression_data %>%
+  mutate(Severity = case_when(
+    Pre_Treatment_Score <= 44 ~ "Normal",
+    Pre_Treatment_Score <= 59 ~ "Mild",
+    Pre_Treatment_Score <= 69 ~ "Moderate",
+    Pre_Treatment_Score > 70 ~ "Severe",
+    ))
+
+#Create Table
+severity_table <- depression_data %>%
+  count(Severity) %>%
+  arrange(desc(n))
+severity_table <- severity_table %>%
+  mutate(Percentage = n / sum(n) * 100)
+print(severity_table)
+
+ggplot(severity_table, aes(x = Severity, y = n, fill = Severity)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  labs(
+    title = "Pre-Treatment Frequency of Depression Severity",
+    x = "Severity Level",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+```{r Post_Treatment_Severity}
+
+
+depression_data <- depression_data %>%
+  mutate(Severity = case_when(
+    Post_Treatment_Score <= 44 ~ "Normal",
+    Post_Treatment_Score <= 59 ~ "Mild",
+    Post_Treatment_Score <= 69 ~ "Moderate",
+    Post_Treatment_Score > 70 ~ "Severe",
+    ))
+
+#Create Table
+severity_table <- depression_data %>%
+  count(Severity) %>%
+  arrange(desc(n))
+severity_table <- severity_table %>%
+  mutate(Percentage = n / sum(n) * 100)
+print(severity_table)
+
+ggplot(severity_table, aes(x = Severity, y = n, fill = Severity)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  labs(
+    title = "Post-Treatment Frequency of Depression Severity",
+    x = "Severity Level",
+    y = "Frequency"
+  ) +
+  theme_minimal()
 ```
 
 ```{r Comparing_Pre_And_Post_Treatment_Scores_By_Gender_And_Treatment_Type}
@@ -146,4 +188,22 @@ ggplot(depression_data, aes(x = Pre_Treatment_Score, y = Post_Treatment_Score, c
 
 ```
 
-**Results**
+```{r Mean_Depression_Scores_Pre_VS_Post_Treatment}
+#Pre Treatment Histogram
+ggplot(summary_data, aes(x = Treatment_Phase, y = Mean_Score, color = Group, group = Group)) +
+  geom_point(size = 4, position = position_dodge(0.2)) +  # Add points for means
+  geom_errorbar(
+    aes(ymin = Lower_CI, ymax = Upper_CI),
+    width = 0.2, size = 1, position = position_dodge(0.2)
+  ) +
+  geom_line(position = position_dodge(0.2)) +  # Connect points with lines
+  labs(
+    title = "95% Confidence Intervals for Depression Scores",
+    x = "Treatment Phase",
+    y = "Mean Depression Score",
+    color = "Treatment Group"
+  ) +
+  theme_minimal() +
+  scale_color_manual(values = c("dodgerblue1", "orange")) +
+  scale_x_discrete(labels = c("Pre_Treatment_Score" = "Pre-Treatment", "Post_Treatment_Score" = "Post-Treatment"))
+```
