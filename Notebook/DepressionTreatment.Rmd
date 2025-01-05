@@ -267,3 +267,52 @@ ggplot(summary_data, aes(x = Treatment_Phase, y = Mean_Score, color = Group, gro
 **Discussion**
 
 In females it can be said that the experimental method alleviates the symptoms of depression more efficiently than the traditional method. In males both methods have a lesser effect, however the experimental method does have a slightly better effect at alleviating the symptoms of depression. Therefor the hypothesis is true for males and females.
+
+```{r}
+# T-test for pre-treatment scores
+t_test_pre <- t.test(Pre_Treatment_Score ~ Group, data = data)
+
+# Show results of the t-test
+summary(t_test_pre)
+```
+
+This summary of t-test for pre-treatment scores will have the t-value, p-value, and confidence intervals. If the p-value is less than 0.05 then there is a significant difference between the two groups before treatment.
+```{r}
+# Create variable for (Post - Pre) called Change_in_Score
+data$Change_in_score <- data$Post_Treatment_Score - data$Pre_Treatment_Score
+```
+
+We then performed an independent t-test to compare the post-treatment scores between the two groups. This helps us assess if the depression scores have changed much between the two groups after the treatment. The results will tell us if there's a significant difference in post-treatment depression scores between the two groups.
+```{r}
+# Create variable for (Post - Pre) called Change_in_Score
+data$Change_in_score <- data$Post_Treatment_Score - data$Pre_Treatment_Score
+```
+
+To test the change in depression scores for each participant, we created a new variable called Change_in_Score. This variable shows the difference between post-treatment and pre-treatment scores. By making this variable we can apply paired t-tests to view the within-group changes in depression scores.
+```{r}
+# Paired t-test for control group (CBT)
+paired_t_test_control <- t.test(data$Pre_Treatment_Score[data$Group == "Control (CBT)"], 
+                                data$Post_Treatment_Score[data$Group == "Control (CBT)"], 
+paired = TRUE)
+
+# Show the results for the control group
+summary(paired_t_test_control)
+```
+
+Next we ran a paired t-test on the Control Group (CBT). This test compares pre-treatment and post-treatment scores for participants in the control group to see if their depression scores have changed significantly over time. The summary output will provide information on the t-value, p-value, and confidence intervals for the change in  scores in the control group.
+```{r}
+# Paired t-test for experimental group (VR)
+paired_t_test_experimental <- t.test(data$Pre_Treatment_Score[data$Group == "Experimental (VR)"], 
+                                     data$Post_Treatment_Score[data$Group == "Experimental (VR)"], 
+                                     paired = TRUE)
+
+# Show the results of the Experimental Group
+summary(paired_t_test_experimental)
+```
+
+We also created a similar paired t-test for the Experimental Group (VR). This test tells us if there's a significant change in depression scores from pre-treatment to post-treatment for the participants in the VR group. The results of this paired t-test will show if the VR treatment significantly lowered depression scores in the experimental group.
+
+
+**Conclusion of t-tests**
+
+Looking at the results of these t-tests, we can determine whether there were any significant differences in depression scores between the control (CBT) and experimental (VR) groups at both the pre-treatment and post-treatment stages. Also, the paired t-tests allow us to assess the effectiveness of the treatment for each group by comparing pre-treatment and post-treatment scores within both groups.

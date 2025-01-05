@@ -55,3 +55,76 @@ ggplot(depression_data, aes(x = Group, y = Pre_Treatment_Score, fill = Group)) +
     y = "Pre-Treatment Score"
   ) +
   theme_minimal()
+
+# Load the CSV data
+data <- read.csv("C:/Users/Nolly/RStudioCA1/RuthRepo/RC_Data_CA1/Data/participants_data_final.csv")
+
+head(data)
+
+# Inspect the structure of the Data
+str(data)
+
+# Summarise statistics of CSV data
+summary(data)
+
+# Check data for missing or null values
+sum(is.na(data)) # Total of missing values
+colSums(is.na(data)) # Missing values in each column
+
+# Check structure of data once more
+str(data)
+
+# Check for duplicate rows
+sum(duplicated(data))
+
+# Check each column has the correct data type
+sapply(data, class)
+
+# convert 'group' and 'gender' from character to factors for easier analysis
+data$Group <- as.factor(data$Group)
+data$Gender <- as.factor(data$Gender)
+
+#Check data once more
+sapply(data, class)
+
+# Get summary statistics to show no character strings
+summary(data)
+
+# T-test for pre-treatment scores
+t_test_pre <- t.test(Pre_Treatment_Score ~ Group, data = data)
+
+# Show results of the t-test
+summary(t_test_pre)
+
+# T-test for post-treatment scores
+t_test_post <- t.test(Post_Treatment_Score ~ Group, data = data)
+
+# show the results of the t-test
+summary(t_test_post)
+
+# Create variable for (Post - Pre) called Change_in_Score
+data$Change_in_score <- data$Post_Treatment_Score - data$Pre_Treatment_Score
+
+# Paired t_test for control group (CBT)
+paired_t_test_control <- t.test(data$Pre_Treatment_Score[data$Group == "Control (CBT)"])
+data$Post_Treatment_Score[data$Group == "Control (CBT)"]
+paired = TRUE
+                                
+# Show the results for the control group
+summary(paired_t_test_control)
+
+#Paired t-test for experimental group (AR)
+paired_t_test_experimental <- t.test(data$Pre_Treatment_Score[data$Group == "Experimental (VR)"], 
+data$Post_Treatment_Score[data$Group == "Experimental (VR)"], 
+paired = TRUE)
+
+# Show the results of Experimental Group
+summary(paired_t_test_experimental)
+
+
+
+
+
+
+
+
