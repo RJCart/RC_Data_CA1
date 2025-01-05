@@ -55,3 +55,37 @@ ggplot(depression_data, aes(x = Group, y = Pre_Treatment_Score, fill = Group)) +
     y = "Pre-Treatment Score"
   ) +
   theme_minimal()
+library(dplyr)
+
+# Perform the t-tests
+# Independent t-test: Pre-treatment Scores
+t1 <- t.test(Score ~ Group, data = filter(data, Time == "Pre-Treatment"))
+
+# Independent t-test: Post-treatment Scores
+t2 <- t.test(Score ~ Group, data = filter(data, Time == "Post-Treatment"))
+
+# Paired t-test: Change in Scores
+# Create a column for the change in scores (Post - Pre)
+data <- data %>%
+  group_by(ID) %>%  # Ensure unique participant IDs
+  mutate(Change = Score[Time == "Post-Treatment"] - Score[Time == "Pre-Treatment"]) %>%
+  ungroup()
+
+t3 <- t.test(filter(data, Group == "Experimental")$Change, 
+             filter(data, Group == "Control")$Change)
+
+# Create a summary table
+results_table <- tibble(
+  `Test Type` = c("Independent t-test", "Independent t-test", "Paired t-test"),
+  `Group Comparison` = c("Pre-treatment Scores", "Post-treatment Scores", "Change in Scores"),
+  `T-value` = c(t1$statistic, t2$statistic, t3$statistic),
+  `P-value` = c(t1$p.value, t2$p.value, t3$p.value),
+  `Conclusion` = ifelse(c(t1$p.value, t2$p.value, t3$p.value) < 0.05, "Significant", "Not Significant")
+)
+
+# View the results table
+print(results_table)
+
+# Save the table in a pretty format (optional)
+library(knitr)
+kable(results_table, digits = 3, caption = "Statistical Test Results")
