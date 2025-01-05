@@ -1,6 +1,10 @@
 ---
-title: "Comparison of VR Based and Traditional Treatments of Depression on Males and Females Aged 18-80"
-output: html_notebook
+title: "Comparison of VR Based and Traditional Treatments of Depression on Males and
+  Females Aged 18-80\nRuth Campion Niall McHugh Ca1 DKIT 2024/2025"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
 ---
 
 **Abstract:**
@@ -33,7 +37,6 @@ library(ggplot2)
 library(tidyverse)
 library(conflicted)
 library(dplyr)
-library(hmisc)
 #Preference dplyr for conflicts
 conflicts_prefer(dplyr::filter)
 ```
@@ -42,34 +45,7 @@ conflicts_prefer(dplyr::filter)
 #Define Dataset
 depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
 
-# Inspect the structure of the Data
-str(data)
 
-# Summarise statistics of CSV data
-summary(data)
-
-# Check data for missing or null values
-sum(is.na(data)) # Total of missing values
-colSums(is.na(data)) # Missing values in each column
-
-# Check structure of data once more
-str(data)
-
-# Check for duplicate rows
-sum(duplicated(data))
-
-# Check each column has the correct data type
-sapply(data, class)
-
-# convert 'group' and 'gender' from character to factors for easier analysis
-data$Group <- as.factor(data$Group)
-data$Gender <- as.factor(data$Gender)
-
-#Check data once more
-sapply(data, class)
-
-# Get summary statistics to show no character strings
-summary(data)
 ```
 
 **We start by loading the CSV file with participant data about their treatment group and their depression scores.After running data cleaning code the only discrepancy found was that the group and gender columns were labelled as character strings. However it would be better practice to convert these to factors. Since the Group and Gender categories are considered variables, factors would be a more accurate mode of statistical analysis for these variables.**
@@ -241,4 +217,12 @@ It would be interesting if the data on the specific age of the participants had 
 
 It would also have been useful to know whether the participants were receiving other forms of pharmaceutical or non-pharmaceutical therapy to treat their depression.
 
-References
+It would be good to know about the design of the VR aspect of the experimental treatment. Given that the quality of the VR experiment could effect the response to the sensory data in the participants (Sanches-Vives and Slater, 2005), it would be interesting to know by what principles this experiment was designed. Perhaps another experiment which compares different types of VR treatments would be a useful study.
+
+**References**
+
+UBC Emerging Media Lab (2021). *Immersion and Memory: How Our Brains Understand Virtual Worls*. [online] YouTube. Available at: <https://www.youtube.com/watch?v=jH2UhC1HS_M> [Accessed 5 Jan. 2025].
+
+‌Sanchez-Vives, M.V. and Slater, M. (2005). From presence to consciousness through virtual reality. *Nature Reviews Neuroscience*, [online] 6(4), pp.332–339. doi:<https://doi.org/10.1038/nrn1651.>
+
+‌
