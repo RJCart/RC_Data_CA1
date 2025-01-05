@@ -7,11 +7,11 @@ output: html_notebook
 
 **The Aim of this project is to determine whether, in treatment of depression in Males and Females aged 18-40, a VR-based method of treatment is more effective than a traditional CBT method of treatment.**
 
-**To assess depression severity, the author of the Dataset has used self reporting to gather severity of depression in 200 patients. The patients were psychotherapy patients, male(95) and female(105) and fell between the ages of 18 to 40 years old. The patients were randomly assigned to participate in the traditional CBT method (Control group) or the VR-Based method (experimental.) The patients then used the Zung Self-Rating Depression Scale**
+**To assess depression severity, the author of the Data set has used self reporting to gather severity of depression in 200 patients. The patients were psychotherapy patients, male(95) and female(105) and fell between the ages of 18 to 40 years old. The patients were randomly assigned to participate in the traditional CBT method (Control group) or the VR-Based method (experimental.) The patients then used the Zung Self-Rating Depression Scale**
 
 **Introduction**
 
-**The immersive nature of VR could be useful in the non-pharmacutical treatment of depression in men and women. In this study we will compare the results from the data gathered to determine whether the data itself is useful, and whether it is true that an experimental VR treatment for depression is as effective or perhaps more effective than a traditional Cognitive Behavioural method of treatment.**
+**The immersive nature of VR could be useful in the non-pharmaceutical treatment of depression in men and women. In this study we will compare the results from the data gathered to determine whether the data itself is useful, and whether it is true that an experimental VR treatment for depression is as effective or perhaps more effective than a traditional Cognitive Behavioral method of treatment.**
 
 **If the data shows that participants who suffer with symptoms of depression experience more relief through VR based therapy, then it could be said that this is an effective method of treatment for these symptoms.**
 
@@ -236,3 +236,9 @@ ggplot(summary_data, aes(x = Treatment_Phase, y = Mean_Score, color = Group, gro
 **Discussion**
 
 In females it can be said that the experimental method alleviates the symptoms of depression more efficiently than the traditional method. In males both methods have a lesser effect, however the experimental method does have a slightly better effect at alleviating the symptoms of depression. Therefor it can be said that the hypothesis is true for males and females, however we think the findings warrant further investigation.
+
+It would be interesting if the data on the specific age of the participants had been gathered, as this could be a influential factor when analysing the data. Had the effectiveness of the treatment been skewed in favour of an age group as well as a gender group this could have been something worth considering in our evaluation.
+
+It would also have been useful to know whether the participants were receiving other forms of pharmaceutical or non-pharmaceutical therapy to treat their depression.
+
+References
