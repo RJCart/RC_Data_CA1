@@ -41,7 +41,38 @@ conflicts_prefer(dplyr::filter)
 ```{r Import_Data_Set}
 #Define Dataset
 depression_data <- read.csv("C:/Users/Ruth/Desktop/Ca1_RuthC/RC_Data_CA1/Data/participants_data_final.csv")
+
+# Inspect the structure of the Data
+str(data)
+
+# Summarise statistics of CSV data
+summary(data)
+
+# Check data for missing or null values
+sum(is.na(data)) # Total of missing values
+colSums(is.na(data)) # Missing values in each column
+
+# Check structure of data once more
+str(data)
+
+# Check for duplicate rows
+sum(duplicated(data))
+
+# Check each column has the correct data type
+sapply(data, class)
+
+# convert 'group' and 'gender' from character to factors for easier analysis
+data$Group <- as.factor(data$Group)
+data$Gender <- as.factor(data$Gender)
+
+#Check data once more
+sapply(data, class)
+
+# Get summary statistics to show no character strings
+summary(data)
 ```
+
+We start by loading the CSV file with participant data about their treatment group and their depression scores.After running data cleaning code the only discrepancy found was that the group and gender columns were labelled as character strings. However it would be better practice to convert these to factors. Since the Group and Gender categories are considered variables, factors would be a more accurate mode of statistical analysis for these variables. 
 
 ```{r Summary_Data}
 
