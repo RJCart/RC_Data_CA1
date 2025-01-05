@@ -5,25 +5,25 @@ output: html_notebook
 
 **Abstract:**
 
-The Aim of this project is to determine whether, in treatment of depression in Males and Females aged 18-40, a VR-based method of treatment is more effective than a traditional CBT method of treatment.
+**The Aim of this project is to determine whether, in treatment of depression in Males and Females aged 18-40, a VR-based method of treatment is more effective than a traditional CBT method of treatment.**
 
-To assess depression severity, the author of the Dataset has used self reporting to gather severity of depression in 200 patients. The patients were psychotherapy patients, male(95) and female(105) and fell between the ages of 18 to 40 years old. The patients were randomly assigned to participate in the traditional CBT method (Control group) or the VR-Based method (experimental.) The patients then used the Zung Self-Rating Depression Scale
+**To assess depression severity, the author of the Dataset has used self reporting to gather severity of depression in 200 patients. The patients were psychotherapy patients, male(95) and female(105) and fell between the ages of 18 to 40 years old. The patients were randomly assigned to participate in the traditional CBT method (Control group) or the VR-Based method (experimental.) The patients then used the Zung Self-Rating Depression Scale**
 
 **Introduction**
 
-The immersive nature of VR could be useful in the non-pharmacutical treatment of depression in men and women. In this study we will compare the results from the data gathered to determine whether the data itself is useful, and whether it is true that an experimental VR treatment for depression is as effective or perhaps more effective than a traditional Cognitive Behavioural method of treatment.
+**The immersive nature of VR could be useful in the non-pharmacutical treatment of depression in men and women. In this study we will compare the results from the data gathered to determine whether the data itself is useful, and whether it is true that an experimental VR treatment for depression is as effective or perhaps more effective than a traditional Cognitive Behavioural method of treatment.**
 
-If the data shows that participants who suffer with symptoms of depression experience more relief through VR based therapy, then it could be said that this is an effective method of treatment for these symptoms.
+**If the data shows that participants who suffer with symptoms of depression experience more relief through VR based therapy, then it could be said that this is an effective method of treatment for these symptoms.**
 
 **Hypothesis**:
 
-In men and women aged 10-40 who suffer with symptoms of depression, a VR based method of treatment is more effective than traditional method in relieving these symptoms of depression.
+**In men and women aged 10-40 who suffer with symptoms of depression, a VR based method of treatment is more effective than traditional method in relieving these symptoms of depression.**
 
 **Method**
 
-There were 100 participants in the survey, all of whom were between the age of 18 and 40. There were 95 males and 105 female participants. The participants were divided to two equal groups, one of which used Cognitive Behavioural Therapy (The Control group) and the other which used VR based therapy (Experimental Group). The participants spent 50 minutes per week for the duration of 12 weeks with a therapist. The participants were asked to self report at the beginning and end of the study. The Zung Depression Scale was used. It is a 20-item sale which asks to report from 1 to 4 with 1 meaning a little of the time and 4 meaning most of the time. The scores ranged from 20 to80.
+**There were 100 participants in the survey, all of whom were between the age of 18 and 40. There were 95 males and 105 female participants. The participants were divided to two equal groups, one of which used Cognitive Behavioural Therapy (The Control group) and the other which used VR based therapy (Experimental Group). The participants spent 50 minutes per week for the duration of 12 weeks with a therapist. The participants were asked to self report at the beginning and end of the study. The Zung Depression Scale was used. It is a 20-item sale which asks to report from 1 to 4 with 1 meaning a little of the time and 4 meaning most of the time. The scores ranged from 20 to80.**
 
-In this document, we will use statistical analysis to determine whether a difference can be observed between the treatment methods in men and in women.
+**In this document, we will use statistical analysis to determine whether a difference can be observed between the treatment methods in men and in women.**
 
 **Results**
 
@@ -72,7 +72,7 @@ sapply(data, class)
 summary(data)
 ```
 
-We start by loading the CSV file with participant data about their treatment group and their depression scores.After running data cleaning code the only discrepancy found was that the group and gender columns were labelled as character strings. However it would be better practice to convert these to factors. Since the Group and Gender categories are considered variables, factors would be a more accurate mode of statistical analysis for these variables. 
+**We start by loading the CSV file with participant data about their treatment group and their depression scores.After running data cleaning code the only discrepancy found was that the group and gender columns were labelled as character strings. However it would be better practice to convert these to factors. Since the Group and Gender categories are considered variables, factors would be a more accurate mode of statistical analysis for these variables.**
 
 ```{r Summary_Data}
 
@@ -95,7 +95,9 @@ summary_data <- depression_data %>%
 
 ```
 
-Using The Zung Depression Scale, we defined levels of severity of depression as variables and used this to visualise the level of severity pre and post-treatment for the Control and Experimental groups. We can see from this data that there are no severe cases of depression for either of the treatment methods post-treatment. More participants in both groups can be categorised as having normal levels of depression post-treatment. It can be noted that there is a significant change in the number of participants who underwent the Experimental treatment who fall under the normal category of depression after having received treatment.
+**Visualising Trends in Depression severity pre vs post treatment using the Zung Depression scale**
+
+**Using The Zung Depression Scale, we defined levels of severity of depression as variables and used this to visualise the level of severity pre and post-treatment for the Control and Experimental groups. We can see from this data that there are no severe cases of depression for either of the treatment methods post-treatment. More participants in both groups can be categorised as having normal levels of depression post-treatment. It can be noted that there is a significant change in the number of participants who underwent the Experimental treatment who fall under the normal category of depression after having received treatment.**
 
 ```{r Pre_Treatment_Severity}
 
@@ -175,7 +177,9 @@ ggplot(severity_by_treatment, aes(x = Severity, y = Frequency, fill = Group)) +
 
 ```
 
-j
+**Visualising the effect of treatment experienced by the two genders.**
+
+Here we have visualised the pre and post treatment scores by gender and group. It is interesting to observe that males tend to score lower and have less change, whereas females tend to score higher and also seem to experience a greater benefit from the treatment.
 
 ```{r Comparing_Pre_And_Post_Treatment_Scores_By_Gender_And_Treatment_Type}
 
@@ -205,44 +209,9 @@ ggplot(long_data, aes(x = interaction(Gender, Score_Type), y = Score, fill = Gro
 
 ```
 
-Overall, female participants experienced the greater change in depression symptoms. Notably, the females who participated in the experimental treatment had the greatest change in score on the Zung Depression Scale.
+**Testing whether the pre-treatment score relates to the post-treatment score.**
 
-```{r Average_Change_In_Score_By_Gender_And_Treatment_Group}
-
-
-ggplot(depression_data, aes(x = interaction(Gender, Group), y = Change_in_Score, fill = Group)) +
-  stat_summary(fun = mean, geom = "bar", position = position_dodge(), width = 0.7) +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(0.7), width = 0.2) +
-  labs(
-    title = "Average Change in Score by Gender and Treatment Group",
-    x = "Gender and Treatment Group",
-    y = "Average Change in Score",
-    fill = "Treatment Group"
-  ) +
-  theme_minimal() +
-  scale_x_discrete(labels = c("Male.Control" = "Male (Control)", "Male.Experimental" = "Male (Experimental)",
-                              "Female.Control" = "Female (Control)", "Female.Experimental" = "Female (Experimental)"))+
-  scale_fill_manual(values = c("dodgerblue1", "orange"))
-
-
-
-```
-
-```{r Relationship_Between_Initial_Scores_And_Change_After_Treatment}
-ggplot(depression_data, aes(x = Pre_Treatment_Score, y = Post_Treatment_Score, color = Group)) +
-  geom_point(size = 3, alpha = 0.7) +
-  geom_smooth(method = "lm", se = FALSE, size = 1) +
-  labs(
-    title = "Relationship Between Initial Scores and Change After Treatment",
-    x = "Initial Depression Score",
-    y = "Post Treatment Score",
-    color = "Treatment Group"
-  ) +
-  theme_minimal() +
-  facet_wrap(~ Group) +
-  scale_color_manual(values = c("dodgerblue1", "orange"))
-
-```
+In the Control Group there is a stronger correlation between pre-treatment and post-treatment scores. The relationship between pre-treatment and post-treatment for the Experimental group is less strong but a pattern can still be observed. We can see from the upward slope that higher pre-treatment scores relate to higher post-treatment scores.
 
 ```{r Mean_Depression_Scores_Pre_VS_Post_Treatment}
 #Pre Treatment Histogram
@@ -266,4 +235,4 @@ ggplot(summary_data, aes(x = Treatment_Phase, y = Mean_Score, color = Group, gro
 
 **Discussion**
 
-In females it can be said that the experimental method alleviates the symptoms of depression more efficiently than the traditional method. In males both methods have a lesser effect, however the experimental method does have a slightly better effect at alleviating the symptoms of depression. Therefor the hypothesis is true for males and females.
+In females it can be said that the experimental method alleviates the symptoms of depression more efficiently than the traditional method. In males both methods have a lesser effect, however the experimental method does have a slightly better effect at alleviating the symptoms of depression. Therefor it can be said that the hypothesis is true for males and females, however we think the findings warrant further investigation.
